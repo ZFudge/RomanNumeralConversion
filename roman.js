@@ -1,33 +1,52 @@
-const numerals = {
-	I: 1,
-	V: 5,
-	X: 10,
-	L: 50,
-	C: 100,
-	D: 500,
-	M: 1000
+const roman = {
+	"1": "I",
+	"5": "V",
+	"10": "X",
+	"50": "L",
+	"100": "C",
+	"500": "D",
+	"1000": "M"
 };
 
-function split(num) {
-	if (num <= 10) {
-		return num;
-	} else if (num <= 100) {
-		if (num % 10 === 0) {
-			return num;
+const split = (num) => {
+	return (num <= 10) ? [num] : (
+		(num <= 100) ? (num % 10 === 0) ? num : [num - (num % 10), num % 10]
+		: (num <= 1000) ? (num % 10 === 0) ? num : [num - (num % 100), (num % 100) - (num % 10), num % 10]
+		: (num % 10 === 0) ? num : [num - (num % 1000), (num % 1000) - (num % 100), (num % 100) - (num % 10), num % 10]
+	);
+};
+
+function convert(arr) {
+	const newArr = [];
+
+
+
+	return newArr.join("");
+}
+
+function conversion(single, half, whole, num) {
+	const newArr = [];
+
+	if (whole === num) {
+		newArr.push(whole);
+	} else if (num === whole * 0.4 || num === whole * 0.9) {
+		if (num < half) {
+			newArr.push(single,half);
 		} else {
-			return [num - (num % 10), num % 10];
-		}
-	} else if (num <= 1000) {
-		if (num % 10 === 0) {
-			return num;
-		} else {
-			return [num - (num % 100), (num % 100) - (num % 10), num % 10];
+			newArr.push(single,whole);
 		}
 	} else {
-		if (num % 10 === 0) {
-			return num;
+		if (num % half === num) {
+			for (let i = single; i <= num; i += single) {
+				newArr.push(single);
+			}
 		} else {
-			return [num - (num % 1000), (num % 1000) - (num % 100), (num % 100) - (num % 10), num % 10];
+			newArr.push(half);
+			for (let i = single; i <= num % half; i += single) {
+				newArr.push(single);
+			}
 		}
 	}
+
+	return newArr.join("");
 }
