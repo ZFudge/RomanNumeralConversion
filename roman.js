@@ -1,29 +1,17 @@
-const roman = {
-	"1": "I",
-	"5": "V",
-	"10": "X",
-	"50": "L",
-	"100": "C",
-	"500": "D",
-	"1000": "M"
-};
+const roman = {"1": "I", "5": "V", "10": "X", "50": "L", "100": "C", "500": "D", "1000": "M"};
 
 const splitter = (num) => {
 	return (num <= 10) ? [num] : (
 		(num <= 100) ? (num % 10 === 0) ? [num] : [num - (num % 10), num % 10]
-		: (num <= 1000) ? (num % 10 === 0) ? [num] : [num - (num % 100), (num % 100) - (num % 10), num % 10]
-		: (num % 10 === 0) ? [num] : [num - (num % 1000), (num % 1000) - (num % 100), (num % 100) - (num % 10), num % 10]
+		: (num <= 1000) ? (num % 100 === 0) ? [num] : [num - (num % 100), ((num % 100) - (num % 10)), num % 10]
+		: (num % 1000 === 0) ? [num] : [num - (num % 1000), ((num % 1000) - (num % 100)), ((num % 100) - (num % 10)), num % 10]
 	);
 };
 
 function convertToRoman(num) {
 	const newArray = [];
 	const split = splitter(num);
-
-	split.forEach(function(cur) {
-		newArray.push(conversion(cur));
-	});
-
+	split.forEach((cur) => newArray.push(conversion(cur)));
 	num = newArray.join("");
 	return num;
 }
